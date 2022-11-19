@@ -1,0 +1,126 @@
+
+DROP TABLE IF EXISTS `User` ;
+
+CREATE TABLE IF NOT EXISTS `User` (
+  `id` INT NOT NULL auto_increment unsigned,
+  `login` VARCHAR(255) NULL UNIQUE,
+  `password` VARCHAR(255) NULL,
+  PRIMARY KEY (`id`));
+
+
+
+DROP TABLE IF EXISTS `Games` ;
+
+CREATE TABLE IF NOT EXISTS `Games` (
+  `id` INT NOT NULL AUTO_INCREMENT unsigned,
+  `rating` VARCHAR(45) NULL,
+  `user_id` int unsigned not null,
+  PRIMARY KEY (`id`));
+
+
+
+DROP TABLE IF EXISTS `Frends` ;
+
+CREATE TABLE IF NOT EXISTS `Frends` (
+  `id` INT NOT NULL AUTO_INCREMENT unsigned,
+  `status` VARCHAR(45) NULL,
+  `sender_id` VARCHAR(45) NULL,
+  `user_id` int unsigned not null,
+  PRIMARY KEY (`id`));
+
+
+
+DROP TABLE IF EXISTS `Profile` ;
+
+CREATE TABLE IF NOT EXISTS `Profile` (
+  `id` INT NOT NULL AUTO_INCREMENT unsigned,
+  `age` VARCHAR(45) NULL,
+  `gender` VARCHAR(45) NULL,
+  `city` VARCHAR(45) NULL,
+  `user_id` int unsigned not null,
+  PRIMARY KEY (`id`));
+
+
+
+DROP TABLE IF exists `Chat` ;
+
+CREATE TABLE IF NOT EXISTS `Chat` (
+  `id` INT NOT NULL AUTO_INCREMENT unsigned,
+  `from_id` VARCHAR(45) NULL,
+  `to_id` VARCHAR(45) NULL,
+  `body` VARCHAR(45) NULL,
+  `User_id` int unsigned not null,
+  PRIMARY KEY (`id`));
+
+
+
+DROP TABLE IF EXISTS `Media` ;
+
+CREATE TABLE IF NOT EXISTS `Media` (
+  `id` INT NOT NULL AUTO_INCREMENT unsigned,
+  `Group_id` int unsigned not null,
+  PRIMARY KEY (`id`));
+
+
+
+DROP TABLE IF EXISTS `Category` ;
+
+CREATE TABLE IF NOT EXISTS `Category` (
+  `id` INT NOT NULL AUTO_INCREMENT unsigned,
+  `name` VARCHAR(45) NULL,
+  `media_id` int unsigned not null,
+  PRIMARY KEY (`id`));
+
+
+
+DROP TABLE IF EXISTS `Group` ;
+
+CREATE TABLE IF NOT EXISTS `Group` (
+  `id` INT NOT NULL AUTO_INCREMENT unsigned,
+  `media_id` VARCHAR(45) NULL,
+  `name` VARCHAR(45) NULL,
+  `User_id` int unsigned not null,
+  PRIMARY KEY (`id`));
+
+
+
+DROP TABLE IF EXISTS `events` ;
+
+CREATE TABLE IF NOT EXISTS `events` (
+  `id` INT NOT NULL AUTO_INCREMENT unsigned,
+  `name` VARCHAR(45) NULL,
+  `messange` VARCHAR(45) NULL,
+  `group_id` int unsigned not null,
+  PRIMARY KEY (`id`));
+
+
+
+DROP TABLE IF EXISTS `Games_has_User` ;
+
+CREATE TABLE IF NOT EXISTS `Games_has_User` (
+  `id` INT NOT NULL AUTO_INCREMENT unsigned,
+  PRIMARY KEY (`id`));
+
+alter table frends 
+add constraint foreign key (user_id) references user (id); 
+
+alter table profile  
+add constraint foreign key (user_id) references user (id); 
+
+alter table chat  
+add constraint foreign key (User_id) references user (id); 
+
+alter table games 
+add constraint foreign key (user_id) references user (id); 
+
+alter table group
+add constraint foreign key (User_id) references user (id); 
+
+alter table media  
+add constraint foreign key (Group_id) references group (id); 
+
+alter table category  
+add constraint foreign key (media_id) references media (id); 
+
+alter table events  
+add constraint foreign key (group_id) references group (id); 
